@@ -1,1 +1,126 @@
-"use strict";var t,hours=0,minutes=0,seconds=0;$("#hours").click(function(){$("#hours").val("")}),$("#minutes").click(function(){$("#minutes").val("")}),$("#seconds").click(function(){$("#seconds").val("")});var processForm=function(){checkForm()},checkForm=function(){var e=!1,s=0;hours=$("#hours").val(),minutes=$("#minutes").val(),seconds=$("#seconds").val(),!checkNum(hours)&&s++,!checkNum(minutes)&&s++,!checkNum(seconds)&&s++,e=0!=s,$(".error")&&$(".error").remove().fadeOut(),e?$("#countdown-form").prepend('<p class="error">One of more of your inputs is not a number</p>').fadeIn():timer()},checkNum=function(e){var s=parseInt(e);return!(isNaN(s)||s<0)},timer=function(){$("#countdown-form").hide(),$("#restart").show(),t=setTimeout(minus,1e3)},minus=function(){var e=hours<10==1?"0".concat(hours):"".concat(hours),s=minutes<10==1?"0".concat(minutes):"".concat(minutes),n=seconds<10==1?"0".concat(seconds):"".concat(seconds);0!=seconds||0!=hours||0!=minutes?(updateDisplay("".concat(e,":").concat(s,":").concat(n)),--seconds<0&&(minutes--,seconds=59),minutes<0&&0<hours&&(minutes=59,hours--),timer()):updateDisplay("Times Up!")},updateDisplay=function(e){if($("#countdown-timer-display").html(e),"Times Up!"==e){$("#countdown-timer-display").addClass("accentText").addClass("animate-item");var s=document.getElementById("time-up-sound");s.play(),setTimeout(function(){return s.pause()},1e4)}},restart=function(){$("#countdown-form").show(),$("#restart").hide(),$("#countdown-timer-display").removeClass("accentText").removeClass("animate-item").html("00:00:00"),document.getElementById("time-up-sound").pause(),clearTimeout(t),$("#hours").val(""),$("#minutes").val(""),$("#seconds").val("")};
+"use strict";
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+//Global variables
+var hours = 0;
+var minutes = 0;
+var seconds = 0;
+var t; //Make our inputs empty on click
+
+$("#hours").click(function () {
+  $("#hours").val("");
+});
+$("#minutes").click(function () {
+  $("#minutes").val("");
+});
+$("#seconds").click(function () {
+  $("#seconds").val("");
+});
+
+var processForm = function processForm() {
+  checkForm();
+};
+
+var checkForm = function checkForm() {
+  var showError = false;
+  var errorCount = 0;
+  hours = $("#hours").val();
+  minutes = $("#minutes").val();
+  seconds = $("#seconds").val();
+  checkNum(hours) ? null : errorCount++;
+  checkNum(minutes) ? null : errorCount++;
+  checkNum(seconds) ? null : errorCount++;
+  errorCount == 0 ? (showError = false) : (showError = true); //Show error if we need to but remove previous entry first
+
+  $(".error") ? $(".error").remove().fadeOut() : null;
+  showError
+    ? $("#countdown-form")
+        .prepend(
+          '<p class="error">One of more of your inputs is not a number</p>'
+        )
+        .fadeIn()
+    : timer();
+};
+
+var checkNum = function checkNum(num) {
+  var newNum = parseInt(num);
+  var result = false;
+  isNaN(newNum) || newNum < 0 ? (result = false) : (result = true);
+  return result;
+};
+
+var timer = function timer() {
+  $("#countdown-form").hide();
+  $("#restart").show();
+  t = setTimeout(minus, 1000);
+};
+
+var minus = function minus() {
+  //Format our time
+  var hoursDisplay = hours < 10 == 1 ? "0".concat(hours) : "".concat(hours),
+    minutesDisplay =
+      minutes < 10 == 1 ? "0".concat(minutes) : "".concat(minutes),
+    secondsDisplay =
+      seconds < 10 == 1 ? "0".concat(seconds) : "".concat(seconds);
+
+  if (seconds == 0 && hours == 0 && minutes == 0) {
+    updateDisplay("Times Up!");
+    return;
+  }
+
+  updateDisplay(
+    ""
+      .concat(hoursDisplay, ":")
+      .concat(minutesDisplay, ":")
+      .concat(secondsDisplay)
+  );
+  seconds--;
+
+  if (seconds < 0) {
+    minutes--;
+    seconds = 59;
+  }
+
+  if (minutes < 0) {
+    if (hours > 0) {
+      minutes = 59;
+      hours--;
+    }
+  }
+
+  timer();
+};
+
+var updateDisplay = function updateDisplay(display) {
+  $("#countdown-timer-display").html(display);
+
+  if (display == "Times Up!") {
+    $("#countdown-timer-display")
+      .addClass("accentText")
+      .addClass("animate-item");
+    var x = document.getElementById("time-up-sound");
+    x.play();
+    setTimeout(function () {
+      return x.pause();
+    }, 10000);
+  }
+};
+
+var restart = function restart() {
+  $("#countdown-form").show();
+  $("#restart").hide();
+  $("#countdown-timer-display")
+    .removeClass("accentText")
+    .removeClass("animate-item")
+    .html("00:00:00"); //Clear the timeout
+
+  document.getElementById("time-up-sound").pause();
+  clearTimeout(t); //Empty our inputs
+
+  $("#hours").val("");
+  $("#minutes").val("");
+  $("#seconds").val("");
+};
