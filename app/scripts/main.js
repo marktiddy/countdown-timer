@@ -5,14 +5,14 @@ var seconds = 0;
 var t;
 
 //Make our inputs empty on click
-$("#hours").click(() => {
-  $("#hours").val("");
+$('#hours').click(() => {
+  $('#hours').val('');
 });
-$("#minutes").click(() => {
-  $("#minutes").val("");
+$('#minutes').click(() => {
+  $('#minutes').val('');
 });
-$("#seconds").click(() => {
-  $("#seconds").val("");
+$('#seconds').click(() => {
+  $('#seconds').val('');
 });
 
 const processForm = () => {
@@ -22,9 +22,9 @@ const checkForm = () => {
   var showError = false;
   var errorCount = 0;
 
-  hours = $("#hours").val();
-  minutes = $("#minutes").val();
-  seconds = $("#seconds").val();
+  hours = $('#hours').val();
+  minutes = $('#minutes').val();
+  seconds = $('#seconds').val();
 
   checkNum(hours) ? null : errorCount++;
   checkNum(minutes) ? null : errorCount++;
@@ -33,9 +33,9 @@ const checkForm = () => {
   errorCount == 0 ? (showError = false) : (showError = true);
 
   //Show error if we need to but remove previous entry first
-  $(".error") ? $(".error").remove().fadeOut() : null;
+  $('.error') ? $('.error').remove().fadeOut() : null;
   showError
-    ? $("#countdown-form")
+    ? $('#countdown-form')
         .prepend(
           '<p class="error">One of more of your inputs is not a number</p>'
         )
@@ -51,8 +51,8 @@ const checkNum = (num) => {
 };
 
 const timer = () => {
-  $("#countdown-form").hide();
-  $("#restart").show();
+  $('#countdown-form').hide();
+  $('#restart').show();
   t = setTimeout(minus, 1000);
 };
 
@@ -63,7 +63,7 @@ const minus = () => {
     secondsDisplay = seconds < 10 == 1 ? `0${seconds}` : `${seconds}`;
 
   if (seconds == 0 && hours == 0 && minutes == 0) {
-    updateDisplay("Times Up!");
+    updateDisplay('Times Up!');
     return;
   }
 
@@ -85,29 +85,29 @@ const minus = () => {
 };
 
 const updateDisplay = (display) => {
-  $("#countdown-timer-display").html(display);
-  if (display == "Times Up!") {
-    $("#countdown-timer-display")
-      .addClass("accentText")
-      .addClass("animate-item");
-    var x = document.getElementById("time-up-sound");
+  $('#countdown-timer-display').html(display);
+  if (display == 'Times Up!') {
+    $('#countdown-timer-display')
+      .addClass('accentText')
+      .addClass('animate-item');
+    var x = document.getElementById('time-up-sound');
     x.play();
     setTimeout(() => x.pause(), 10000);
   }
 };
 
 const restart = () => {
-  $("#countdown-form").show();
-  $("#restart").hide();
-  $("#countdown-timer-display")
-    .removeClass("accentText")
-    .removeClass("animate-item")
-    .html("00:00:00");
+  $('#countdown-form').show();
+  $('#restart').hide();
+  $('#countdown-timer-display')
+    .removeClass('accentText')
+    .removeClass('animate-item')
+    .html('00:00:00');
   //Clear the timeout
-  document.getElementById("time-up-sound").pause();
+  document.getElementById('time-up-sound').pause();
   clearTimeout(t);
   //Empty our inputs
-  $("#hours").val("");
-  $("#minutes").val("");
-  $("#seconds").val("");
+  $('#hours').val('');
+  $('#minutes').val('');
+  $('#seconds').val('');
 };
