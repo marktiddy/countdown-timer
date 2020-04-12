@@ -67,5 +67,23 @@
         "single"
       ]
     }
-  }
+  },
+  "name": "countdown-timer",
+  "version": "1.0.0",
+  "main": "gulpfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marktiddy/countdown-timer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marktiddy/countdown-timer/issues"
+  },
+  "homepage": "https://github.com/marktiddy/countdown-timer#readme",
+  "description": ""
 }

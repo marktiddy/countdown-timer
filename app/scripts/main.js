@@ -1,4 +1,3 @@
-import jquery from 'jquery';
 //Global variables
 var hours = 0;
 var minutes = 0;
